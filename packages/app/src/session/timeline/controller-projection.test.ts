@@ -195,6 +195,36 @@ describe("visibleTimelineMessages", () => {
 
     expect(visibleTimelineMessages(failed, [steer]).map((message) => message.id)).toEqual(["msg_3", "msg_idle"])
   })
+
+  test("keeps each pre-promotion failed idle after its own pending input", () => {
+    const failed = [
+      { id: "msg_3", type: "user", text: "first", time: { created: 3 } },
+      {
+        id: "msg_idle_a",
+        type: "idle",
+        outcome: "failed",
+        error: { type: "unknown", message: "first failed" },
+        time: { created: 4 },
+      },
+      { id: "msg_4", type: "user", text: "second", time: { created: 5 } },
+      {
+        id: "msg_idle_b",
+        type: "idle",
+        outcome: "failed",
+        error: { type: "unknown", message: "second failed" },
+        time: { created: 6 },
+      },
+    ] satisfies SessionMessageInfo[]
+
+    const pending = [steer, { ...steer, id: "msg_4" }]
+
+    expect(visibleTimelineMessages(failed, pending).map((message) => message.id)).toEqual([
+      "msg_3",
+      "msg_idle_a",
+      "msg_4",
+      "msg_idle_b",
+    ])
+  })
 })
 
 describe("applyTimelineMessageHandoff", () => {

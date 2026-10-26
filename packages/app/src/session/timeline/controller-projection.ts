@@ -101,8 +101,9 @@ export function visibleTimelineMessages(
       const rest = visible.slice(0, -1)
 
       return [
-        ...rest.filter((message) => !inputs.has(message.id)),
-        ...rest.filter((message) => inputs.has(message.id)),
+        ...rest.slice(0, start),
+        ...rest.slice(start).filter((message) => !inputs.has(message.id)),
+        ...rest.slice(start).filter((message) => inputs.has(message.id)),
         tail,
       ]
     }
