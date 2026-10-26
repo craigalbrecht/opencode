@@ -1091,6 +1091,13 @@ export const dict = {
   "settings.permissions.tool.list.description": "List files within a directory",
   "settings.permissions.tool.bash.title": "Bash",
   "settings.permissions.tool.bash.description": "Run shell commands",
+  // v2 emits the action name `shell` (v1's `bash` is migrated in core/src/v1/config/migrate.ts).
+  // Without this key the dock resolves the description to the key itself and renders an empty
+  // body, so a shell permission prompt shows only its title.
+  "settings.permissions.tool.shell.title": "Shell",
+  "settings.permissions.tool.shell.description": "Run shell commands",
+  "settings.permissions.tool.question.title": "Question",
+  "settings.permissions.tool.question.description": "Ask you a question before continuing",
   "settings.permissions.tool.task.title": "Task",
   "settings.permissions.tool.task.description": "Launch sub-agents",
   "settings.permissions.tool.skill.title": "Skill",
